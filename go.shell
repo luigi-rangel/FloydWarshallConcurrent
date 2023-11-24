@@ -1,0 +1,10 @@
+echo "Compilando a solução"
+gcc ./src/main.c ./src/matrix.c ./src/solve.c -o main -Wall -lpthread
+
+echo "Gerando conjunto de grafos para validacao"
+python ./test/generator.py
+
+./main.exe 10 input/test-0.txt output/test-0.txt
+
+#validador ainda não foi adaptado
+python ./test/validator.py
