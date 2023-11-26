@@ -1,16 +1,13 @@
 import networkx as nx
 import numpy as np
 import random
-import os
-
-os.makedirs("input", exist_ok=True)
 
 for i in range(10):
     # num_nodes = np.random.randint(50, 1000)
     # num_edges = num_nodes * np.random.random() * 3
 
-    num_nodes = 10
-    num_edges = 15
+    num_nodes = 1000
+    num_edges = 1500
 
     fPath = f"input/test-{i}.txt"
 

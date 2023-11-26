@@ -1,7 +1,7 @@
 import networkx as nx
 
-in_file = "./test.in"
-outFile = "./test.out"
+in_file = "./input/test-1.txt"
+outFile = "./output/test-1.txt"
 
 in_test = nx.floyd_warshall(nx.read_edgelist(in_file), weight='weight')
 

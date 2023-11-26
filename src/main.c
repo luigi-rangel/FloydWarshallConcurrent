@@ -13,8 +13,8 @@ int main(int argc, char *argv[])
 
     if (argc < 3)
     {
-        printf("ERRO: chamada incorreta ao programa!\n");
-        printf("Formato correto: %s <numero de threads> <arquivo de entrada> <arquivo de saida>\n", argv[0]);
+        printf("ERRO: chamada incorreta ao programa! Formato correto:\n");
+        printf("%s <numero de threads> <arquivo de entrada> <arquivo de saida>\n", argv[0]);
         exit(1);
     }
     nThreads = atoi(argv[1]);
