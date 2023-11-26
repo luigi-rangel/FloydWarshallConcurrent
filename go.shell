@@ -8,3 +8,5 @@ time ./main.exe 10 input/test-1.txt output/test-1.txt
 
 #validador ainda não foi adaptado
 python ./test/validator.py
+
+#teste
