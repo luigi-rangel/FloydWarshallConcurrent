@@ -14,12 +14,14 @@ typedef struct
 int size;
 pthread_barrier_t barrier;
 
+//função de comparação do caminho minimo atual e do caminho mínimo processado
 void step(double **distances, int i, int j, int k)
 {
     if (distances[i][j] > distances[i][k] + distances[k][j])
         distances[i][j] = distances[i][k] + distances[k][j];
 }
 
+//seção do floyd warshall a ser paralelizada
 void *computeBlock(void *arg)
 {
     int k, i, j;
@@ -98,6 +100,7 @@ void floydWarshall(matrix input, int nThreads)
     }
 }
 
+//imprissão de solução no terminal
 void printSolution(matrix adjMatrix)
 {
     int i, j;
