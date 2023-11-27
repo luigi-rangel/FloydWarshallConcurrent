@@ -1,18 +1,13 @@
 import networkx as nx
-import numpy as np
 import random
 
-for i in range(10):
-    # num_nodes = np.random.randint(50, 1000)
-    # num_edges = num_nodes * np.random.random() * 3
+samples = [(2 ** (i + 1), random.randint(int(2 ** i), int(2 ** (i + 2)))) for i in range(10)]
 
-    num_nodes = 1000
-    num_edges = 1500
-
+for i in range(len(samples)):
     fPath = f"input/test-{i}.txt"
 
     # Gere um grafo aleatório
-    G = nx.gnm_random_graph(num_nodes, num_edges)
+    G = nx.gnm_random_graph(samples[i][0], samples[i][1])
 
     # Adicione pesos aleatórios às arestas
     for edge in G.edges():
@@ -26,7 +21,7 @@ for i in range(10):
         content = file.read()
 
     # Adicione o comentário ao início do conteúdo
-    content = f"# {num_nodes}\n" + content
+    content = f"# {samples[i][0]}\n" + content
 
     # Reescreva o arquivo com o comentário
     with open(fPath, "w") as file:

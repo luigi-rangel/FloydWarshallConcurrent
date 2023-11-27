@@ -56,8 +56,7 @@ void floydWarshall(matrix input, int nThreads)
 
     if (size < nThreads)
     {
-        printf("ERRO: numero de threads deve ser menor ou igual ao tamanho da matriz!\n");
-        exit(1);
+        nThreads = size;
     }
 
     if (pthread_barrier_init(&barrier, NULL, nThreads))
