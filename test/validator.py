@@ -8,6 +8,7 @@ def load_matrix(input_file):
         lines = file.readlines()
 
         for line in lines:
+            if line[0] == "#": continue
             # Remove espaços em branco e caracteres especiais
             clean_line = line.strip('{}\n').split()
 
@@ -26,8 +27,8 @@ solution_path = "main.exe"
 error = False
 
 for i in range(num_tests):
-    input_file_path = f"input/test-{i}.txt"
-    output_file_path = f"output/test-{i}.txt"
+    input_file_path = f"input/validate-{i}.txt"
+    output_file_path = f"output/validate-{i}.txt"
 
     print(f"Processando o arquivo {input_file_path}")
 

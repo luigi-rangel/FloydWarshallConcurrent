@@ -101,11 +101,11 @@ void floydWarshall(matrix input, int nThreads)
 }
 
 //imprissão de solução no terminal
-void printSolution(matrix adjMatrix)
+void printSolution(matrix adjMatrix, int time)
 {
     int i, j;
 
-    printf("Aqui esta a matriz de solucao do algoritmo de Floyd-Warshall:\n\n");
+    printf("Tempo de execucao: %dms\n\n", time);
 
     for (i = 0; i < adjMatrix.size; i++)
     {

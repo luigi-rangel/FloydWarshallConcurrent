@@ -1,15 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include <sys/timeb.h>
+
 #include "headers/matrix.h"
 #include "headers/solve.h"
 
 int main(int argc, char *argv[])
 {
-    int nThreads;
+    int nThreads, execTime;
     matrix adjMatrix;
     char *inputFilePath, *outputFilePath;
     FILE *outputFile;
+    struct timeb start, end;
 
     // recebendo argumentos da linha de comando
     if (argc < 3)
@@ -43,17 +46,20 @@ int main(int argc, char *argv[])
     adjMatrix = loadMatrix(inputFilePath);
 
     // calculando matriz de caminhos mínimos
+    ftime(&start);
     floydWarshall(adjMatrix, nThreads);
+    ftime(&end);
+    execTime = (int) (1000.0 * (end.time - start.time)  + (end.millitm - start.millitm));
 
     /* Se for especificado um arquivo de saída, o resultado é escrito nele. 
     Caso contrário, a saída é printada no terminal */
     if (outputFile != NULL)
     {
-        fPrintMatrix(adjMatrix, outputFile);
+        fPrintMatrix(adjMatrix, execTime, outputFile);
     }
     else
     {
-        printSolution(adjMatrix);
+        printSolution(adjMatrix, execTime);
     }
 
     //liberando espaço alocado e fechando arquivo

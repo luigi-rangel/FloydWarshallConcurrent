@@ -4,8 +4,9 @@ import subprocess
 import time
 
 solution_path = "./main.exe"
+output_path = "output/bin.txt"
 
-num_tests = 10
+num_tests = 4
 max_threads = 20
 num_attempts = 5
 
@@ -18,11 +19,12 @@ for i in range(num_tests):
         avg = 0
 
         for attempt in range(num_attempts):
-            ini = time.time()
-            subprocess.call([solution_path, str(nthreads), f"input/test-{i}.txt", "output/bin.txt"])
-            end = time.time()
+            subprocess.call([solution_path, str(nthreads), f"input/evaluate-{i}.txt", output_path])
 
-            avg += end - ini
+            outputFile = open(output_path, "r")
+            line = outputFile.readline()
+
+            avg += int(line[2:])
 
         results[i][nthreads] = avg / num_attempts
 
