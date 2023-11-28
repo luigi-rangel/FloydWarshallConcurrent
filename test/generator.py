@@ -21,10 +21,10 @@ def generateSamples(sizes, title):
         with open(fPath, "w") as file:
             file.write(content)
 
+example_sample = [(10, 15)]
 validation_samples = [(2 ** (i + 1), random.randint(int(2 ** i), int(2 ** (i + 2)))) for i in range(10)]
-
-generateSamples(validation_samples, "validate")
-
 evaluation_samples = [(100, 300), (500, 500), (1000, 1500), (2000, 3000)]
 
+generateSamples(example_sample, "example")
+generateSamples(validation_samples, "validate")
 generateSamples(evaluation_samples, "evaluate")

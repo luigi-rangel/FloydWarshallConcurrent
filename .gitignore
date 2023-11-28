@@ -1,2 +1,7 @@
 **/*.txt
 **/*.exe
+**/main
+
+.vscode/*
+
+**/*.jpg
