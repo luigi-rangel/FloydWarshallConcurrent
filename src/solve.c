@@ -3,12 +3,13 @@
 #include <stdio.h>
 #include <float.h>
 
-#include "headers/solve.h"
+#include "headers/solve.h"  
 
+//argumentos da thread
 typedef struct
 {
-    int ini, end;
-    double **distances;
+    int ini, end; //inicio e fim do bloco
+    double **distances; //matriz de distancias
 } targs;
 
 int size;
@@ -25,8 +26,9 @@ void step(double **distances, int i, int j, int k)
 void *computeBlock(void *arg)
 {
     int k, i, j;
-    targs block = *(targs *)arg;
+    targs block = *(targs *)arg; //importando argumentos
 
+    // rodando floyd warshall para o bloco (delimitado po ini e end)
     for (k = 0; k < size; k++)
     {
         for (i = block.ini; i < block.end; i++)
@@ -37,7 +39,7 @@ void *computeBlock(void *arg)
             }
         }
 
-        pthread_barrier_wait(&barrier);
+        pthread_barrier_wait(&barrier); //esperando para que todas as threads sigam juntas para a proxima iteração
     }
 
     free(arg);
@@ -47,6 +49,7 @@ void *computeBlock(void *arg)
     return NULL;
 }
 
+//algoritmo floyd warshall paralelizado
 void floydWarshall(matrix input, int nThreads)
 {
     int i, ini, end;
@@ -54,24 +57,28 @@ void floydWarshall(matrix input, int nThreads)
     pthread_t threads[nThreads];
     targs *block;
 
-    size = input.size;
+    size = input.size; //lendo tamanho da entrada
 
     if (size < nThreads)
     {
         nThreads = size;
     }
 
+    // inicializando a barreira
     if (pthread_barrier_init(&barrier, NULL, nThreads))
     {
         printf("ERRO: falha na criacao da barreira");
         exit(1);
     }
 
+    //criando e disparando threads
     for (i = 0; i < nThreads; i++)
     {
+        //dividindo a carga entre as threads
         ini = (i * size) / nThreads;
         end = ((i + 1) * size) / nThreads;
 
+        //alocando espaço para os argumentos da thread
         block = malloc(sizeof(targs));
         if (block == NULL)
         {
@@ -79,10 +86,12 @@ void floydWarshall(matrix input, int nThreads)
             exit(1);
         }
 
+        //inicializando os argumentos da thread
         block->distances = input.weights;
         block->ini = ini;
         block->end = end;
 
+        //disparando threads
         if (pthread_create(&threads[i], NULL, computeBlock, (void *)block))
         {
             printf("ERRO: falha na criacao da thread %d", i);
@@ -90,6 +99,7 @@ void floydWarshall(matrix input, int nThreads)
         }
     }
 
+    //esperando o termino da execução de todas as threads
     for (i = 0; i < nThreads; i++)
     {
         if (pthread_join(threads[i], NULL))
