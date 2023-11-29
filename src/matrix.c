@@ -45,9 +45,11 @@ matrix loadMatrix(char *filePath)
     return adjMatrix;
 }
 
-void fPrintMatrix(matrix adjMatrix, FILE *outputFile)
+void fPrintMatrix(matrix adjMatrix, int time, FILE *outputFile)
 {
     int i, j;
+
+    fprintf(outputFile, "# %d\n", time);
 
     for (i = 0; i < adjMatrix.size; i++)
     {

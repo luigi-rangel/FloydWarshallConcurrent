@@ -1,12 +1,14 @@
 echo "Compilando a solução"
-gcc ./src/main.c ./src/matrix.c ./src/solve.c -o main -Wall -lpthread
+gcc ./src/main.c ./src/matrix.c ./src/solve.c -o main -lpthread
 
-echo "Gerando conjunto de grafos para validacao"
+echo "Gerando conjunto de grafos para validação"
 python ./test/generator.py
 
-time ./main.exe 10 input/test-1.txt output/test-1.txt
+echo "Exemplo de saída:"
+./main.exe 5 input/example-0.txt
 
-#validador ainda não foi adaptado
+echo "Executando o validador:"
 python ./test/validator.py
 
-#teste
+echo "Avaliando o desempenho..."
+python ./test/evaluator.py

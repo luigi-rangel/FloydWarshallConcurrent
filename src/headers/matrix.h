@@ -8,7 +8,6 @@ typedef struct
 
 matrix loadMatrix(char *filePath);
 
-void fPrintMatrix(matrix adjMatrix, FILE *stream);
-void printMatrix(matrix adjMatrix);
+void fPrintMatrix(matrix adjMatrix, int time, FILE *stream);
 
 void destroyMatrix(matrix adjMatrix);

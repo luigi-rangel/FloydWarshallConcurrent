@@ -1,28 +1,30 @@
 import networkx as nx
 import random
 
-samples = [(2 ** (i + 1), random.randint(int(2 ** i), int(2 ** (i + 2)))) for i in range(10)]
+def generateSamples(sizes, title):
+    for i in range(len(sizes)):
+        fPath = f"input/{title}-{i}.txt"
+        
+        G = nx.gnm_random_graph(sizes[i][0], sizes[i][1])
 
-for i in range(len(samples)):
-    fPath = f"input/test-{i}.txt"
+        for edge in G.edges():
+            weight = random.uniform(0.1, 1.0)
+            G[edge[0]][edge[1]]['weight'] = weight
 
-    # Gere um grafo aleatório
-    G = nx.gnm_random_graph(samples[i][0], samples[i][1])
+        nx.write_edgelist(G, fPath)
 
-    # Adicione pesos aleatórios às arestas
-    for edge in G.edges():
-        weight = random.uniform(0.1, 1.0)  # Peso aleatório entre 0.1 e 1
-        G[edge[0]][edge[1]]['weight'] = weight
+        with open(fPath, "r") as file:
+            content = file.read()
 
-    nx.write_edgelist(G, fPath)
+        content = f"# {sizes[i][0]}\n" + content
 
-    # Leia o conteúdo do arquivo
-    with open(fPath, "r") as file:
-        content = file.read()
+        with open(fPath, "w") as file:
+            file.write(content)
 
-    # Adicione o comentário ao início do conteúdo
-    content = f"# {samples[i][0]}\n" + content
+example_sample = [(10, 15)]
+validation_samples = [(2 ** (i + 1), random.randint(int(2 ** i), int(2 ** (i + 2)))) for i in range(10)]
+evaluation_samples = [(100, 300), (500, 500), (1000, 1500), (2000, 3000)]
 
-    # Reescreva o arquivo com o comentário
-    with open(fPath, "w") as file:
-        file.write(content)
+generateSamples(example_sample, "example")
+generateSamples(validation_samples, "validate")
+generateSamples(evaluation_samples, "evaluate")
